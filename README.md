@@ -194,7 +194,7 @@ npm install
 paket install
 ```
 
-## Run you application (open on port 8080)
+## Run you application (defaults to port 8080)
 ```
 npm start
 ```
