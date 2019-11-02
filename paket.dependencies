@@ -5,3 +5,5 @@ nuget Fable.Elmish.Debugger
 nuget Fable.Elmish.HMR
 nuget Fable.Elmish.React
 nuget Fable.Fetch
+nuget Feliz
+nuget Zanaptak.TypedCssClasses
