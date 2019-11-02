@@ -67,7 +67,7 @@ Add this code to the index.html file
 </body>
 </html>
 ```
-*NOTE!* `<div id="app"></div>`; remember the Id="app", we need this name for later
+*NOTE!* `<div id="app"></div>`; remember the `id="app"`, we need this id-string for later.
 
 
 ## Setup npm (package.json)
@@ -185,7 +185,9 @@ module App
     |> Program.withReactBatched "app"
     |> Program.run
 ```
-NOTE: The string "app" in `Program.withReactBatched "app"`must correspond with the id="app" in index.html
+*NOTE*: 
+In the step regarding index.html I told you to remember the `id="app"`. This is where we need that id-string. 
+The string `"app"` in `Program.withReactBatched "app"`must correspond with `id="app"` in index.html fot the program to work.
 
 
 ## Run package managment installations
