@@ -186,8 +186,8 @@ module App
     |> Program.run
 ```
 *NOTE*: 
-In the step regarding index.html I told you to remember the `id="app"`. This is where we need that id-string. 
-The string `"app"` in `Program.withReactBatched "app"`must correspond with `id="app"` in index.html fot the program to work.
+In the step regarding index.html I told you to remember `id="app"`. This is where we need that id-string. 
+The string `"app"` in `Program.withReactBatched "app"`must correspond with `id="app"` in the index.html file for the program to work.
 
 
 ## Run package managment installations
