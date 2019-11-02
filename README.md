@@ -201,5 +201,5 @@ paket install
 npm start
 ```
 
-![alt text](/public/images/localhost8080.png)
+![alt text](public/images/localhost8080.PNG)
 
