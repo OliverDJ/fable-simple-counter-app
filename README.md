@@ -175,7 +175,7 @@ module App
         
     let render (state: State) dispatch =
         div [ClassName "foo"][//div
-            h1 [] [str "Hello world"]
+            h1 [] [str "Fable Counter"]
             button [ OnClick (fun _ -> dispatch Decrement) ] [ R.str "-" ]
             h1 [] [R.str (state.Counter.ToString())]
             button [ OnClick (fun _ -> dispatch Increment) ] [ R.str "+" ]
@@ -200,3 +200,6 @@ paket install
 ```
 npm start
 ```
+
+![alt text](./public/images/localhost8080.png)
+
