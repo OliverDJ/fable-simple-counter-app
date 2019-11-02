@@ -1,0 +1,9 @@
+**/node_modules/**
+**/obj/**
+**/bin/**
+**/.vs/**
+**/packages/**
+**/.paket/load/**
+**/paket-files/**
+**/paket.exe
+**/.ionide/**
