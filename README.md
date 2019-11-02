@@ -201,5 +201,3 @@ paket install
 npm start
 ```
 
-![alt text](../fable-simple-counter-app/public/images/localhost8080.PNG)
-
