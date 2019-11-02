@@ -1,11 +1,17 @@
+# Counter App with Fable
 
-### Create folder for entire project
+## Prerequisites
+- npm
+- paket
+- dotnet (with support for netcoreapp2.2)
+
+## Create folder for entire project
 ```
 mkdir counter-app
 cd counter-app
 ```
 
-# Initialize package managers
+## Initialize package managers
 ```
 npm init
 paket init
@@ -18,15 +24,8 @@ cd src
 dotnet new classlib --language f# --framework netcoreapp2.2 --name CounterApp
 ```
 
-Create solution file (.sln) in root folder (/counter-app)
-
-```
-dotnet new sln --name CounterApp
-dotnet sln CounterApp.sln add src\CounterApp\CounterApp.fsproj
-```
-
-### Add paket packages
-cd src\CounterApp\
+## Add paket packages
+Navigate to *src/CounterApp/*
 ```
 paket add Fable.Core --project CounterApp.fsproj
 paket add Fable.Elmish.React --project CounterApp.fsproj
@@ -36,10 +35,15 @@ paket add Fable.Elmish.HMR --project CounterApp.fsproj
 paket add Fable.Fetch --project CounterApp.fsproj
 ```
 
+## Create solution file (.sln)
+Navigate to */counter-app* (root)
+```
+dotnet new sln --name CounterApp
+dotnet sln CounterApp.sln add src\CounterApp\CounterApp.fsproj
+```
 
 ## Setup Index.html
-
-Create public folder and add index.html (npm may have added)
+Create public folder and add index.html
 ```
 mkdir public
 touch public\index.html
@@ -66,7 +70,7 @@ Add this code to the index.html file
 *NOTE!* `<div id="app"></div>`; remember the Id="app", we need this name for later
 
 
-# Setup npm (package.json)
+## Setup npm (package.json)
 Replace package.json with the following
 ```Json
 {
@@ -99,9 +103,9 @@ Replace package.json with the following
 }
 ```
 
-# Setup webpack
+## Setup webpack
 
-At root (/counter-app)
+Navigate to *counter-app/* (root) 
 ```
 touch webpack.config.js
 ```
@@ -141,7 +145,8 @@ module.exports = {
 
 
 ## Setup F# (Fable)
-In Library.fs in (src/)
+In Library.fs(src/CounterApp/Library.fs)
+replace content with:
 ```fsharp
 module App
     open Fable.React
@@ -189,4 +194,7 @@ npm install
 paket install
 ```
 
-# Run you application (open on port 8080)
+## Run you application (open on port 8080)
+```
+npm start
+```
