@@ -201,3 +201,146 @@ paket install
 npm start
 ```
 
+
+
+## Styling with Css
+
+There are some issues related to the out-of-the-box css styling provided by fable.
+Zaid-Ajaj has created a library that lets us write more react-style code in fable (
+https://github.com/Zaid-Ajaj/Feliz). It allows to easily add styling, class-names etc. 
+
+This alone will do just fine. However, zanaptak (https://github.com/zanaptak/TypedCssClasses) has created a strongly typed Css Type-Provider! You never have to reference classnames and classes with strings ever again (e.g. "button is-primary").
+
+
+
+### Installing dependencies
+Navigate to *src/CounterApp/*
+```
+paket add Feliz --project CounterApp.fsproj
+paket add Zanaptak.TypedCssClasses --project CounterApp.fsproj
+```
+
+### Altering code
+Some of the Fable html object (e.g. div, button) now has to be replaced with Html.div and Html.button respectively (from Felize). We examplify with Bulma, a css framework.
+
+Example:
+```fsharp
+//old import is still required here
+open Feliz
+open Zanaptak.TypedCssClasses
+
+type Bulma = CssClasses<"https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css", Naming.PascalCase>
+
+let render (state: State) dispatch =
+    Html.div[
+    Html.button [ 
+        prop.classes [ Bulma.Button; Bulma.IsPrimary; Bulma.IsMedium] 
+        ]
+    ]   
+```
+
+The Css styled Counter-app can now be written like this.
+
+```fsharp
+module App
+
+    open Fable.React
+    open Elmish
+    open Elmish.React
+    module c = Fable.React.ReactBindings
+    module R = Fable.React.Helpers
+    open Feliz
+    open Zanaptak.TypedCssClasses
+    
+    type FA = CssClasses<"https://use.fontawesome.com/releases/v5.8.1/css/all.css", Naming.PascalCase>
+    type Bulma = CssClasses<"https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css", Naming.PascalCase>
+    
+    type State = 
+        {
+            Counter : int
+        }
+        
+    type Msg = Increment | Decrement
+
+    let init () =
+        {
+            Counter = 0
+        }
+
+    let update (msg:Msg) (state:State) =
+      match msg with
+      | Increment -> { state with Counter = state.Counter + 1}
+      | Decrement -> { state with Counter = state.Counter - 1}
+        
+    let render (state: State) dispatch =
+        Html.div[
+            prop.classes [ Bulma.Control]
+            prop.style [style.textAlign.center; style.marginTop 50]
+            prop.children [
+                Html.button [
+                    prop.classes [ Bulma.Button; Bulma.IsPrimary; Bulma.IsMedium ]
+                    prop.onClick (fun _ -> dispatch Increment)
+                    prop.children [ 
+                        Html.i [ prop.classes [ FA.Fa; FA.FaPlus ] ]
+                    ]
+                ]
+                Html.h1 [
+                    prop.className "title"
+                    prop.style [style.marginTop 20; ]
+
+                    prop.text state.Counter
+                ]
+                Html.button [
+                    prop.classes [ Bulma.Button; Bulma.IsPrimary; Bulma.IsMedium ]
+                    prop.onClick (fun _ -> dispatch Decrement)
+                    prop.children [ 
+                        Html.i [ prop.classes [ FA.Fa; FA.FaMinus ] ]
+                    ]
+                ]
+             ]
+        ]
+
+    Program.mkSimple init update render
+    |> Program.withReactBatched "app"
+    |> Program.run
+```
+
+### Index.html
+Additionally, two link-references have to be added to the index.html
+The first is for Bulma (css framework), and the second for FontAwesome (icon library)
+``` html
+<link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+
+<link rel="stylesheet" 
+    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
+    crossorigin="anonymous" />
+
+```
+
+The index.html page should look something like this.
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fable Counter App</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" 
+        href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
+        crossorigin="anonymous" />
+    
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/javascript" src="/bundle.js"></script>
+</body>
+</html>
+```
