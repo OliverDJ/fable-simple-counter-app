@@ -344,3 +344,31 @@ The index.html page should look something like this.
 </body>
 </html>
 ```
+
+
+## Side Effects (aync / http)
+Restructure update function
+Update Signature was
+```
+update: msg:Msg -> state:State -> State
+```
+Now is
+```
+update: msg:Msg -> state:State -> State * Cmd<Msg>
+```
+
+State Initialization now needs an Cmd to become (State * Cmd<Msg>)
+```
+let init () =
+    {
+        Counter = 0
+    },
+    Cmd.none
+```
+```
+Program.mkSimple init update render -> Program.mkProgram init update render
+```
+Add Library
+```
+paket add Fable.SimpleHttp --project CounterApp.fsproj
+```
