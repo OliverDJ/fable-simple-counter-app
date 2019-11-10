@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\ComponentHelper.fs" />
+    <Compile Include="Helpers\Css.fs" />
+    <Compile Include="Helpers\Serde.fs" />
+    <Compile Include="Models\HttpModels.fs" />
+    <Compile Include="Models\PokemonModels.fs" />
+    <Compile Include="Models\ProgramModels.fs" />
+    <Compile Include="GenericComponents\Button.fs" />
+    <Compile Include="GenericComponents\H1.fs" />
+    <Compile Include="GenericComponents\Dropdown.fs" />
+    <Compile Include="ComponentInstances\PokemonDropdown.fs" />
+    <Compile Include="GetRelations.fs" />
+    <Compile Include="Program.fs" />
+    <!-- <Compile Include="Library.fs" /> -->
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

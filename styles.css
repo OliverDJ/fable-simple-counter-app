@@ -1,0 +1,14 @@
+
+
+.op {
+    color: chocolate;
+    background-color: silver  
+}
+
+.gryn{
+    color: gold;
+    background-color: chartreuse
+}
+.gryn:hover{
+    background-color: gray
+}

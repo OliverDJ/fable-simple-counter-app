@@ -1,9 +1,17 @@
 source https://www.nuget.org/api/v2
+nuget Elmish.SweetAlert
 nuget Fable.Core
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
 nuget Fable.Elmish.HMR
 nuget Fable.Elmish.React
 nuget Fable.Fetch
+nuget Fable.JsonConverter
+nuget Fable.PowerPack
+nuget Fable.SimpleHttp
+nuget Fable.SimpleJson
 nuget Feliz
+nuget Fsharp.Data
+nuget Newtonsoft.Json
+nuget TaskBuilder.fs
 nuget Zanaptak.TypedCssClasses

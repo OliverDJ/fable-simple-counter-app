@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-    entry: path.join(__dirname, "src", "CounterApp/CounterApp.fsproj"),
+    entry: path.join(__dirname, "src", "PokemonFrontend/PokemonFrontend.fsproj"),
     output: {
         path: path.join(__dirname, "public"),
         filename: "bundle.js",
