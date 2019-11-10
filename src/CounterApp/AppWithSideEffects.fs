@@ -8,11 +8,16 @@
     open Feliz
     open Zanaptak.TypedCssClasses
     open Fable.SimpleHttp
+    open Fable.SimpleJson
 
     type FA = CssClasses<"https://use.fontawesome.com/releases/v5.8.1/css/all.css", Naming.PascalCase>
     type Bulma = CssClasses<"https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css", Naming.PascalCase>
-    
 
+    type Person =
+        {
+            Name: string
+            Age: int
+        }
 
     type RemoteData<'a> =
         | HasNotLoaded
@@ -25,22 +30,29 @@
      | IncrementTwice
      | IncrementDelayed
      | GetData
-     | DataRecieved of string
+     | DataRecieved of Person
      | DataErrorWhileReceivingData of string
 
     type State = 
         {
             Counter : int
-            ResponseText : RemoteData<Result<string, string>>
+            ResponseText : RemoteData<Result<Person, string>>
         }
         
+    let bindJson<'a> (str: string) = str |> Json.parseAs<Person>
+    let tryBindJson<'a> (str: string) = str |> Json.tryParseAs<Person>
+        
+
     let getSomeData () =
         async {
             do! Async.Sleep 4000
-            let! (statusCode, responseText ) = Http.get "http://localhost:7071/api/immuneAgainst/1"
+            let! (statusCode, responseText ) = Http.get "/example.json"
+            let result = responseText|> tryBindJson<Person>
+
             let ret = 
-                match statusCode with 
-                | 200 -> DataRecieved responseText
+                match statusCode, result with 
+                | 200, Ok person -> DataRecieved person
+                | 200, Error e -> DataErrorWhileReceivingData e
                 | _ -> DataErrorWhileReceivingData (sprintf "Status code: %A" statusCode)
             return ret
         }
@@ -84,11 +96,11 @@
             prop.text text
             prop.style [style.color color]
         ]
-    let private renderResponseText (responseText: RemoteData<Result<string, string>>) =
+    let private renderResponseText (responseText: RemoteData<Result<Person, string>>) =
         match responseText with
         | HasNotLoaded -> Html.none
         | Loading -> Html.span "Imagin fancy spinner"
-        | FinishedLoading (Ok data) -> renderSimpleH1 data "#0000ff"
+        | FinishedLoading (Ok data) -> renderSimpleH1 data.Name "#0000ff"
         | FinishedLoading (Error e) -> renderSimpleH1 e "#ff0000"
 
         
