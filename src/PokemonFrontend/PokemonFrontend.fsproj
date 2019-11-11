@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CommandHelper.fs" />
     <Compile Include="Helpers\ComponentHelper.fs" />
     <Compile Include="Helpers\Css.fs" />
     <Compile Include="Helpers\Serde.fs" />
@@ -13,6 +14,7 @@
     <Compile Include="GenericComponents\Button.fs" />
     <Compile Include="GenericComponents\H1.fs" />
     <Compile Include="GenericComponents\Dropdown.fs" />
+    <Compile Include="ComponentInstances\PokemonRelations.fs" />
     <Compile Include="ComponentInstances\PokemonDropdown.fs" />
     <Compile Include="GetRelations.fs" />
     <Compile Include="Program.fs" />

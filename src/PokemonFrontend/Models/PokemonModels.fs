@@ -3,8 +3,8 @@
     module PokemonModels =
 
         type SelectedPokemonType =
-        | NotSelected
-        | Selected of int
+            | NotSelected
+            | Selected of int
 
         [<CLIMutable>]
         type PokemonType =
@@ -18,12 +18,12 @@
         type PokemonTypes = PokemonType list
 
         [<CLIMutable>]
-        type Relations =
+        type PokemonRelations =
             {
-                StrongAgainst : PokemonType array
-                NotEffective : PokemonType array
-                WeakAgainst : PokemonType array
-                ResistantAgainst : PokemonType array
-                DoesNotEffect: PokemonType array
-                ImmuneAgainst: PokemonType array
+                StrongAgainst : PokemonTypes
+                NotEffective : PokemonTypes
+                WeakAgainst : PokemonTypes
+                ResistantAgainst : PokemonTypes
+                DoesNotEffect: PokemonTypes
+                ImmuneAgainst: PokemonTypes
             }

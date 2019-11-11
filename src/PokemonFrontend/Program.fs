@@ -9,68 +9,49 @@ namespace Api
         module c = Fable.React.ReactBindings
         module R = Fable.React.Helpers
         open Feliz
-        open Zanaptak.TypedCssClasses
-        open Fable.Core
-        open Fable.SimpleJson
-        open Fable.SimpleHttp
         open PokemonDropdown
         open ProgramModels
         open Css
         open H1
         open Button
         open PokemonModels
-        open Serde
         open HttpModels
-        open Elmish.SweetAlert
-        
+        open CommandHelper
+        open PokemonRelations
+
+
         let init () =
             {
                 PokemonTypes = HasNotLoaded
-                CurrentPokemonTypeId = 0
-            }, 
-            Cmd.none
+                PokemonRelations = HasNotLoaded
+                CurrentPokemonTypeId = NotSelected
 
-        let getPokemonTypes () =
-            async{
-                //let! (statusCode, responseText ) = Http.get "http://localhost:7071/api/allPokemonType"
-                let! (statusCode, responseText ) = Http.get "/example.json"
-                let result = responseText |> Json.tryParseAs<PokemonTypes>
-                //let result = responseText|> tryBindJson<PokemonTypes>
-                let ret =
-                    match statusCode, result with
-                    | 200, Ok pokemonTypes -> PokemonTypesReceived pokemonTypes
-                    | 200, Error e -> ErrorWhileReceivingData e
-                    | _ -> ErrorWhileReceivingData (sprintf "Status code: %A" statusCode)
-                return ret
             }
-        
-        
-        let withGetPokemonTypesCommand state =
-            {state with PokemonTypes = Loading}, Cmd.OfAsync.perform getPokemonTypes () id
+            |> withGetPokemonTypesCommand
 
-        let withoutCommands state = state, Cmd.none
+        //let withCrazy
 
-
+        let witSetSelectedCommand state =
+            {state with CurrentPokemonTypeId = Selected 1}, Cmd.OfAsync.perform getRelations () id
 
         let update (msg:Msg) (state:State) : State * Cmd<Msg> =
             match msg with
-            | SetCurrentPokemonId id -> { state with CurrentPokemonTypeId = id}, Cmd.none
+            | SetCurrentPokemonId id -> { state with CurrentPokemonTypeId = Selected id } |> withGetRelationsCommand
             | GetPokemonTypes -> state |> withGetPokemonTypesCommand
-            | PokemonTypesReceived pokemonTypes -> {state with PokemonTypes = FinishedLoading (Ok pokemonTypes)} |> withoutCommands
-            | ErrorWhileReceivingData e ->  let alert = SimpleAlert(e)
-                                            state, SweetAlert.Run(alert)
-//{state with PokemonTypes = FinishedLoading (Error e)} |> withoutCommands
+            | GetPokemonRelations -> state |> withGetRelationsCommand
+            | PokemonTypesReceived pokemonTypes -> {state with PokemonTypes = FinishedLoading (Ok pokemonTypes)} |> witSetSelectedCommand//withoutCommands
+            | PokemonRelationsReceived relations -> {state with PokemonRelations = FinishedLoading (Ok relations)} |> withoutCommands
+            //| ErrorWhileReceivingData e -> {state with PokemonTypes = FinishedLoading (Error e)} |> withAlert e
 
 
         let render (state: State) dispatch =  
             Html.div[
                 prop.classes [ Bulma.Control]
-                prop.style [style.textAlign.center; style.marginTop 50]
+                prop.style [style.textAlign.center; style.marginTop 50; ]
                 prop.children[
-                    renderSimpleH1 "Pokemon Types"
+                    renderSimpleH1 "Pokemon Types" None
                     renderPokemonDropdown state.PokemonTypes dispatch
-                    renderSimpleH1 (sprintf "Currently: %A" state.CurrentPokemonTypeId)
-                    renderSimpleButton "Fetch" (fun _ -> dispatch GetPokemonTypes )
+                    renderAllRelations state.PokemonRelations
                 ]
             ]
 
