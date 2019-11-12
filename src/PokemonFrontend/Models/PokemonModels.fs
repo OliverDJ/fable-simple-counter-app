@@ -2,9 +2,6 @@
 
     module PokemonModels =
 
-        type SelectedPokemonType =
-            | NotSelected
-            | Selected of int
 
         [<CLIMutable>]
         type PokemonType =
@@ -27,3 +24,6 @@
                 DoesNotEffect: PokemonTypes
                 ImmuneAgainst: PokemonTypes
             }
+        type SelectedPokemonTypeId =
+            | NotSelected
+            | Selected of int

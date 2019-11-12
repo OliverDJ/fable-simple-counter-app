@@ -19,5 +19,5 @@
             {
                 PokemonTypes : RemoteData<Result<PokemonTypes, string>>
                 PokemonRelations : RemoteData<Result<PokemonRelations, string>>
-                CurrentPokemonTypeId : SelectedPokemonType
+                CurrentPokemonTypeId : SelectedPokemonTypeId
             }

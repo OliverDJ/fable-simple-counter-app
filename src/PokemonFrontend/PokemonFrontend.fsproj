@@ -14,6 +14,7 @@
     <Compile Include="GenericComponents\Button.fs" />
     <Compile Include="GenericComponents\H1.fs" />
     <Compile Include="GenericComponents\Dropdown.fs" />
+    <Compile Include="ComponentInstances\PokemonTypesButtons.fs" />
     <Compile Include="ComponentInstances\PokemonRelations.fs" />
     <Compile Include="ComponentInstances\PokemonDropdown.fs" />
     <Compile Include="GetRelations.fs" />

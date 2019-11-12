@@ -18,10 +18,9 @@ namespace Api
         open H1
 
 
-        let getRelations () =
+        let getRelations typeId =
             async{
-                let! (statusCode, responseText ) = Http.get "http://localhost:7071/api/relations/10"
-                printfn "%A %A" statusCode responseText
+                let! (statusCode, responseText ) = Http.get (sprintf "http://localhost:7071/api/relations/%d" typeId)
                 let result = responseText |> Json.tryParseAs<PokemonRelations>
                 let ret =
                     match statusCode, result with
@@ -32,7 +31,9 @@ namespace Api
             }
 
         let withGetRelationsCommand state =
-            {state with PokemonRelations = Loading}, Cmd.OfAsync.perform getRelations () id
+            match state.CurrentPokemonTypeId with
+            | NotSelected -> {state with PokemonRelations = Loading}, Cmd.OfAsync.perform getRelations 0 id
+            | Selected pId -> {state with PokemonRelations = Loading}, Cmd.OfAsync.perform getRelations pId id
 
         let renderPokemonType (pokemonType: PokemonType) =
             Html.div[
@@ -54,19 +55,23 @@ namespace Api
         let renderPokemonRelations title (pokemonTypes: PokemonTypes) =
             let k = Some [style.color "#ffffff"]
             Html.div [
-                prop.style [style.maxWidth 150;style.padding 10; style.backgroundColor "#eeeeee"; ]
-                prop.classes [Bulma.Container]
+                prop.style [style.maxWidth 150;style.padding 10; style.backgroundColor "#eeeeee"]
+                prop.classes [Bulma.Container;]
                 prop.children[
                     renderSimpleH1 title None//(Some [style.color "#ffffff"])
                     renderPokemonTypeList pokemonTypes   
                 ]
             ]
+
             
 
         let renderAllRelations (pokemonRelationsState: RemoteData<Result<PokemonRelations, string>>) =
+            printfn "Data:  %A" data
             match pokemonRelationsState with
                 | FinishedLoading (Ok data) ->
                     Html.div[
+                        prop.style [ style.marginTop 20]
+                        prop.classes [Bulma.Level;]
                         prop.children[
                             renderPokemonRelations "Strong Against" data.StrongAgainst
                             renderPokemonRelations "Not Effective Against" data.NotEffective
@@ -74,7 +79,6 @@ namespace Api
                             renderPokemonRelations "Resistant Against" data.ResistantAgainst
                             renderPokemonRelations "Does Not Effect" data.DoesNotEffect
                             renderPokemonRelations "Immune Against" data.ImmuneAgainst
-
                         ]
                     ]
 
