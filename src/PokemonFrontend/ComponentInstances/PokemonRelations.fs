@@ -71,7 +71,7 @@ namespace Api
                 | FinishedLoading (Ok data) ->
                     Html.div[
                         prop.style [ style.marginTop 20]
-                        prop.classes [Bulma.Level;]
+                        prop.className CSS.relationsWrapper
                         prop.children[
                             renderPokemonRelations "Strong Against" data.StrongAgainst
                             renderPokemonRelations "Not Effective Against" data.NotEffective

@@ -46,7 +46,7 @@ namespace Api
 
         let render (state: State) dispatch =  
             Html.div[
-                prop.classes [ Bulma.Control]
+                prop.classes [  Bulma.Control; ]
                 prop.style [style.textAlign.center; style.marginTop 50; ]
                 prop.children[
                     renderSimpleH1 "Pokemon Types" None

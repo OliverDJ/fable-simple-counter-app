@@ -1,17 +1,30 @@
 
-/* 
 
-.myoption{
-    color:seagreen;
-    background-color: white
-}
-.myoption:hover{
-    background-color: red
+.relationsWrapper{
+    display: flex;
+    width: 100%
 }
 
 
+.container2 {
+    width: 60vw
+}
 
-.myoption:active{
-    color: lightseagreen;
-    background-color: cornflowerblue
-} */
+
+.myList {
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+    max-width: 50%;
+}
+
+.heyhey{
+    display: flex;
+    justify-content: center
+
+}
+
+.myButton {
+    margin: 2px 5px;
+
+}

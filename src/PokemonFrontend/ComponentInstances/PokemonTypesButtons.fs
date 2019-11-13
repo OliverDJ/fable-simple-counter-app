@@ -23,19 +23,27 @@ namespace Api
             SetCurrentPokemonId id |> f
 
         let renderTypeButton (dispatch: Msg -> unit) (pokemonType: PokemonType) =
-            Html.button[
-                prop.value pokemonType.Id
-                prop.style [style.backgroundColor pokemonType.Color; style.color "#ffffff"]
-                prop.classes[Bulma.Button; Bulma.IsRounded; Bulma.IsFamilySecondary]
-                prop.onClick (setCurrentId dispatch)
-                prop.text pokemonType.Name
+            Html.listItem[
+                prop.children[
+                    Html.button[
+                        prop.value pokemonType.Id
+                        prop.style [style.backgroundColor pokemonType.Color; style.color "#ffffff"]
+                        prop.classes[Bulma.Button; Bulma.IsRounded; Bulma.IsFamilySecondary; CSS.myButton]
+                        prop.onClick (setCurrentId dispatch)
+                        prop.text pokemonType.Name
+                    ]
+                ]
             ]
 
-
-
         let renderPokemonTypeButtons (dispatch: Msg -> unit) (pokemonTypes: PokemonTypes) = 
-            Html.ul [
-                prop.children [ for p in pokemonTypes -> renderTypeButton dispatch p]
+            Html.div[
+                prop.className "heyhey"
+                prop.children [
+                    Html.ul [
+                        prop.className "myList"//CSS.myList
+                        prop.children [ for p in pokemonTypes -> renderTypeButton dispatch p]
+                    ]
+                ]
             ]
 
         let renderPokemonButtons(pokemonTypeState: RemoteData<Result<PokemonTypes, string>>) (dispatch: Msg -> unit)=
@@ -56,9 +64,7 @@ namespace Api
                    prop.classes [Bulma.Heading]
                    prop.text ( sprintf "Selected Pokemon: %s" s)
                 ]
-            
            
-
         let renderSelectedPokemon (p:RemoteData<Result<PokemonTypes, string>>) (s: SelectedPokemonTypeId) =
             match p, s with
             | FinishedLoading (Ok data), Selected id ->  (data, id) ||> renderSelected
